@@ -1,5 +1,4 @@
 import random
-# import keyboard
 import Tools
 
 class Grid:
@@ -33,17 +32,6 @@ def GenerateBlock(Grid: Grid) -> None:
         tiles: tuple[int, int] = random.choice(EmptyTiles(Grid))
         Grid.grid[tiles[0]][tiles[1]] = random.random() < 0.9 and 2 or 4
 
-
-def droite(Grid: Grid, x: int, y: int):
-    if check_coordinates(Grid.grid, x, y+1) == False:
-        return " "
-    else:
-        if Grid.grid[x][y] != " ":
-            if Grid.grid[x][y] == Grid.grid[x][y+1]:
-                Grid.grid[x][y+1] = str(int(Grid.grid[x][y]) * 2)
-                Grid.grid[x][y] = " "
-                return droite(Grid, x, y+1)
-
 #---------------------------------------------------------------------------------------------------------------#
 
 def Game_init():
@@ -61,27 +49,66 @@ def Game_init():
                     break
                 else:
                     print("Mauvaise direction")
-            # while True:
-            #     if keyboard.is_pressed("up"):
-            #         print("up")
-            #     elif keyboard.is_pressed("down"):
-            #         print("down")
-            #     elif keyboard.is_pressed("left"):
-            #         print("left")
-            #     elif keyboard.is_pressed("right"):
-            #         print("right")
+
+            if direction == 1:
+                for i in range(tab.size):
+                    for j in range(tab.size - 1):
+                        if tab.grid[i][j] != " ":
+                            
+                            if tab.grid[i][j+1] == " ":
+                                tab.grid[i][j+1] = tab.grid[i][j]
+                                tab.grid[i][j] = " "
+                                
+                            if tab.grid[i][j] == tab.grid[i][j+1]:
+                                value = int(tab.grid[i][j+1])*2
+                                tab.grid[i][j+1] = str(value)
+                                tab.grid[i][j] = " "
+
+            if direction == 2:
+                for i in range(tab.size):
+                    for j in range(tab.size - 1):
+                        if tab.grid[i][j] != " ":
+                            
+                            if tab.grid[i][j+1] == " ":
+                                tab.grid[i][j+1] = tab.grid[i][j]
+                                tab.grid[i][j] = " "
+                                
+                            if tab.grid[i][j] == tab.grid[i][j+1]:
+                                value = int(tab.grid[i][j+1])*2
+                                tab.grid[i][j+1] = str(value)
+                                tab.grid[i][j] = " "
+
+            if direction == 3:
+                for _ in range(2):
+                    for i in range(tab.size):
+                        for j in range(tab.size - 1, 0, -1):
+                            if tab.grid[i][j] != " ":
+                                
+                                if tab.grid[i][j-1] == " ":
+                                    tab.grid[i][j-1] = tab.grid[i][j]
+                                    tab.grid[i][j] = " "
+                                    
+                                if tab.grid[i][j] == tab.grid[i][j-1]:
+                                    value = int(tab.grid[i][j-1])*2
+                                    tab.grid[i][j-1] = str(value)
+                                    tab.grid[i][j] = " "
+                            
+                            
 
             if direction == 4:
-                for i in range(tab.size):
-                    for j in range(tab.size):
-                        droite(tab, i, j)
-                #         if tab.grid[i][j] != "None":
-                #             if check_coordinates(tab.grid, i, j+1):
-                #                 if tab.grid[i][j] == tab.grid[i][j+1]:
-                #                     tab.grid[i][j+1] = str(int(tab.grid[i][j]) * 2)
-                #                     tab.grid[i][j] = "None"
-                #         else:
-                #             if check_coordinates(tab.grid, i, j+1):
-                #                 tab.grid[i][j+1] = tab.grid[i][j]
-                #                 tab.grid[i][j] = "None"
+                for _ in range(2):
+                    for i in range(tab.size):
+                        for j in range(tab.size - 1):
+                            if tab.grid[i][j] != " ":
+                                
+                                if tab.grid[i][j+1] == " ":
+                                    tab.grid[i][j+1] = tab.grid[i][j]
+                                    tab.grid[i][j] = " "
+                                    
+                                if tab.grid[i][j] == tab.grid[i][j+1]:
+                                    value = int(tab.grid[i][j+1])*2
+                                    tab.grid[i][j+1] = str(value)
+                                    tab.grid[i][j] = " "
+
+
 Game_init()
