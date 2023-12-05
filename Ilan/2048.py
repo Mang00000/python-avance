@@ -1,6 +1,5 @@
 import random
 import os
-import Tools
 os.system("cls")
 
 class Grid:
@@ -46,7 +45,7 @@ def Game_init():
             print(tab)
 
             while True:
-                direction: int = Tools.AskInt("Choisissez une direction : (haut : 1, bas : 2, gauche : 3, droite : 4)")
+                direction: int = int(input("Choisissez une direction : (haut : 1, bas : 2, gauche : 3, droite : 4)\n"))
                 if 0 < direction <= 4:
                     break
                 else:
@@ -96,16 +95,16 @@ def Game_init():
             # Droite
             if direction == 4:
                 for i in range(tab.size):
-                    for j in range(tab.size -0, 0, -1):
+                    for j in range(tab.size -1, 0, -1):
                         if tab.grid[i][j] != " ":
                             
-                            if tab.grid[i][j+1] == " ":
-                                tab.grid[i][j+1] = tab.grid[i][j]
+                            if tab.grid[i][j-1] == " ":
+                                tab.grid[i][j-1] = tab.grid[i][j]
                                 tab.grid[i][j] = " "
                                 
-                            if tab.grid[i][j] == tab.grid[i][j+1]:
-                                value = int(tab.grid[i][j+1])*2
-                                tab.grid[i][j+1] = str(value)
+                            if tab.grid[i][j] == tab.grid[i][j-1]:
+                                value = int(tab.grid[i][j-1])*2
+                                tab.grid[i][j-1] = str(value)
                                 tab.grid[i][j] = " "
 
 
