@@ -37,7 +37,14 @@ def GenerateBlock(Grid: Grid) -> None:
 
 def Game_init():
         tab: Grid = Grid(4)
+
         GenerateBlock(tab)
+
+        tab.grid = [["4", "4", "2", " "],
+                    ["8", "8", "8", "8"],
+                    ["4", "8", "16", "32"],
+                    [" ", " ", " ", " "]
+                    ]
         
         while True:
             GenerateBlock(tab)
@@ -50,6 +57,7 @@ def Game_init():
                     break
                 else:
                     print("Mauvaise direction")
+            
             # Haut
             if direction == 1:
                 for i in range(tab.size - 1, 0, -1):
@@ -64,6 +72,7 @@ def Game_init():
                                 value = int(tab.grid[i-1][j])*2
                                 tab.grid[i-1][j] = str(value)
                                 tab.grid[i][j] = " "
+            
             # Bas
             if direction == 2:
                 for i in range(tab.size - 1):
@@ -78,8 +87,10 @@ def Game_init():
                                 value = int(tab.grid[i+1][j])*2
                                 tab.grid[i+1][j] = str(value)
                                 tab.grid[i][j] = " "
+            
             # Gauche
             if direction == 3:
+            
                 for i in range(tab.size):
                     for j in range(tab.size - 1):
                         if tab.grid[i][j] != " ":
@@ -92,19 +103,20 @@ def Game_init():
                                 value = int(tab.grid[i][j-1])*2
                                 tab.grid[i][j-1] = str(value)
                                 tab.grid[i][j] = " "
+            
             # Droite
             if direction == 4:
                 for i in range(tab.size):
                     for j in range(tab.size -1, 0, -1):
                         if tab.grid[i][j] != " ":
-                            
+
+                            if tab.grid[i][j] == tab.grid[i][j-1]:
+                                value = int(tab.grid[i][j])*2
+                                tab.grid[i][j] = str(value)
+                                tab.grid[i][j-1] = " "
+
                             if tab.grid[i][j-1] == " ":
                                 tab.grid[i][j-1] = tab.grid[i][j]
-                                tab.grid[i][j] = " "
-                                
-                            if tab.grid[i][j] == tab.grid[i][j-1]:
-                                value = int(tab.grid[i][j-1])*2
-                                tab.grid[i][j-1] = str(value)
                                 tab.grid[i][j] = " "
 
 
