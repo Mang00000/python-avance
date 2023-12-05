@@ -1,5 +1,6 @@
 import random
-
+import os
+os.system('cls')
 
 def ask_int(message: str, min: int, max: int):
     run2 = True
@@ -74,6 +75,13 @@ def play():
     grid = [[" " for _ in range(grid_length)] for _ in range(grid_length)]
     available = init_available(grid)
 
+    grid = [
+        [" ","4","8","2"],
+        ["16","4","4"," "],
+        ["32","4"," "," "],
+        [" "," "," "," "],
+    ]
+
 
     while run:
         display_grid(grid)
@@ -90,36 +98,48 @@ def play():
 
         if movement == "D":
             for l in range(grid_length):
-                for c in range(grid_length - 1):
+                for c in range(grid_length - 1, 0, -1):
                     if grid[l][c] != " ":
 
-                        if grid[l][c+1] == " ":
-                            grid[l][c+1] = grid[l][c]
-                            grid[l][c] = " "
+                        if grid[l][c-1] == grid[l][c]:
+                            value = int(grid[l][c]) * 2
+                            grid[l][c] = str(value)
+                            grid[l][c-1] = " "
 
-                        if grid[l][c+1] == grid[l][c]:
-                            value = int(grid[l][c+1]) * 2
-                            grid[l][c+1] = str(value)
-                            grid[l][c] = " "
+                else:
+                    for c in range(grid_length - 1, 0, -1):
+                        for i in range(c,0,-1):
+                            if grid[l][i] != " ":
+                                index = i
+                                break
+                            else:
+                                index = 0
 
-
+                        grid[l][index], grid[l][c] = grid[l][c], grid[l][index]
 
                         
 
-                        
 
         if movement == "G":
             for l in range(grid_length):
-                for c in range(grid_length - 1, 0 ,-1):
+                for c in range(grid_length - 1):
                     if grid[l][c] != " ":
-                        if grid[l][c-1] == " ":
-                            grid[l][c-1] = grid[l][c]
-                            grid[l][c] = " "
-                        
-                        if grid[l][c-1] == grid[l][c]:
-                            value = int(grid[l][c-1]) * 2
-                            grid[l][c-1] = str(value)
-                            grid[l][c] = " "
+
+                        if grid[l][c+1] == grid[l][c]:
+                            value = int(grid[l][c]) * 2
+                            grid[l][c] = str(value)
+                            grid[l][c+1] = " "
+
+                else:
+                    for c in range(grid_length - 1):
+                        for i in range(c,grid_length-1):
+                            if grid[l][i] != " ":
+                                index = i
+                                break
+                            else:
+                                index = -1
+
+                        grid[l][index], grid[l][c] = grid[l][c], grid[l][index]
 
                             
 
@@ -155,13 +175,5 @@ def play():
         available = init_available(grid)
         create_new_block(grid, available)
         
-
-
-
-
-
-
-
-
 
 play()
