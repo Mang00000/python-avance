@@ -31,7 +31,7 @@ def EmptyTiles(Grid: Grid):
 def GenerateBlock(Grid: Grid) -> None:
     if len(EmptyTiles(Grid)) > 0:
         tiles: tuple[int, int] = random.choice(EmptyTiles(Grid))
-        Grid.grid[tiles[0]][tiles[1]] = random.random() < 0.9 and 2 or 4
+        Grid.grid[tiles[0]][tiles[1]] = str(random.random() < 0.9 and 2 or 4)
 
 #---------------------------------------------------------------------------------------------------------------#
 
@@ -41,9 +41,9 @@ def Game_init():
         GenerateBlock(tab)
 
         tab.grid = [["4", "4", "2", " "],
-                    ["8", "8", "8", "8"],
+                    ["8", "8", " ", "8"],
                     ["4", "8", "16", "32"],
-                    [" ", " ", " ", " "]
+                    [" ", "2", " ", " "]
                     ]
         
         while True:
@@ -57,7 +57,6 @@ def Game_init():
                     break
                 else:
                     print("Mauvaise direction")
-            
             # Haut
             if direction == 1:
                 for i in range(tab.size - 1, 0, -1):
@@ -107,17 +106,19 @@ def Game_init():
             # Droite
             if direction == 4:
                 for i in range(tab.size):
-                    for j in range(tab.size -1, 0, -1):
-                        if tab.grid[i][j] != " ":
+                    for _ in range(tab.size):
+                        for j in range(tab.size -1, 0, -1):
+                            if tab.grid[i][j] != " ":
 
-                            if tab.grid[i][j] == tab.grid[i][j-1]:
-                                value = int(tab.grid[i][j])*2
-                                tab.grid[i][j] = str(value)
-                                tab.grid[i][j-1] = " "
+                                if tab.grid[i][j] == tab.grid[i][j-1]:
+                                    value = int(tab.grid[i][j])*2
+                                    tab.grid[i][j] = str(value)
+                                    tab.grid[i][j-1] = " "
+                                
 
-                            if tab.grid[i][j-1] == " ":
-                                tab.grid[i][j-1] = tab.grid[i][j]
-                                tab.grid[i][j] = " "
-
+                            
+                            if tab.grid[i][j] == " ":
+                                    tab.grid[i][j] = tab.grid[i][j-1]
+                                    tab.grid[i][j-1] = " "
 
 Game_init()
