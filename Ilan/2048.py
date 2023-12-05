@@ -1,5 +1,7 @@
 import random
+import os
 import Tools
+os.system("cls")
 
 class Grid:
     def __init__(self, size: int):
@@ -40,6 +42,7 @@ def Game_init():
         
         while True:
             GenerateBlock(tab)
+            
             print(tab)
 
             while True:
@@ -48,7 +51,7 @@ def Game_init():
                     break
                 else:
                     print("Mauvaise direction")
-    
+            # Haut
             if direction == 1:
                 for i in range(tab.size - 1, 0, -1):
                     for j in range(tab.size):
@@ -62,7 +65,7 @@ def Game_init():
                                 value = int(tab.grid[i-1][j])*2
                                 tab.grid[i-1][j] = str(value)
                                 tab.grid[i][j] = " "
-
+            # Bas
             if direction == 2:
                 for i in range(tab.size - 1):
                     for j in range(tab.size):
@@ -76,10 +79,10 @@ def Game_init():
                                 value = int(tab.grid[i+1][j])*2
                                 tab.grid[i+1][j] = str(value)
                                 tab.grid[i][j] = " "
-
+            # Gauche
             if direction == 3:
                 for i in range(tab.size):
-                    for j in range(tab.size - 1, 0, -1):
+                    for j in range(tab.size - 1):
                         if tab.grid[i][j] != " ":
                             
                             if tab.grid[i][j-1] == " ":
@@ -90,12 +93,10 @@ def Game_init():
                                 value = int(tab.grid[i][j-1])*2
                                 tab.grid[i][j-1] = str(value)
                                 tab.grid[i][j] = " "
-                            
-                            
-
+            # Droite
             if direction == 4:
                 for i in range(tab.size):
-                    for j in range(tab.size - 1):
+                    for j in range(tab.size -0, 0, -1):
                         if tab.grid[i][j] != " ":
                             
                             if tab.grid[i][j+1] == " ":
