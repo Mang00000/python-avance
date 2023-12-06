@@ -3,8 +3,7 @@ import os
 os.system('cls')
 
 def ask_int(message: str, min: int, max: int):
-    run2 = True
-    while run2:
+    while True:
         try:
             check: int = int(input(message))
             if min <= check <= max:
@@ -18,8 +17,7 @@ def ask_int(message: str, min: int, max: int):
 numbers = "1234567890"
 
 def ask_str(message: str):
-    run = True
-    while run:
+    while True:
         try_number = True
         check: str = str(input(message)).strip().upper()
         for e in check:
@@ -47,7 +45,7 @@ def init_available(grid):
     return available
 
 
-grid_length = ask_int("Choisissez la taille de la grille entre 4 et 10", 4, 10)
+grid_length = ask_int("Choisissez la taille de la grille entre 4 et 10\n", 4, 10)
 
 
 def create_new_block(grid, available):
@@ -70,7 +68,6 @@ def create_new_block(grid, available):
 
 
 
-run = True
 def play():
     grid = [[" " for _ in range(grid_length)] for _ in range(grid_length)]
     available = init_available(grid)
@@ -83,10 +80,10 @@ def play():
     ]
 
 
-    while run:
+    while True:
         display_grid(grid)
 
-        movement = input("Dans quelle direction voulez vous allez ?").strip().upper()
+        movement = input("Dans quelle direction voulez vous allez ?\n").strip().upper()
         print(movement)
         """
         if movement == "D":
@@ -171,7 +168,6 @@ def play():
 
 
         
-                        
         available = init_available(grid)
         create_new_block(grid, available)
         
