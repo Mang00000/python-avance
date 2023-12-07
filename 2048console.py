@@ -79,7 +79,7 @@ def move_right(grid):
 
             grid[l][index], grid[l][c] = grid[l][c], grid[l][index]
         #addition
-        for c in range(grid_length - 1, 0, -1):
+        
             if grid[l][c] != " ":
 
                 if grid[l][c-1] == grid[l][c]:
@@ -87,7 +87,7 @@ def move_right(grid):
                     grid[l][c] = str(value)
                     grid[l][c-1] = " "
         #déplacement
-        for c in range(grid_length - 1, 0, -1):
+        
             for i in range(c,0,-1):
                 if grid[l][i] != " ":
                     index = i
@@ -100,7 +100,7 @@ def move_right(grid):
 def move_left(grid):
     for l in range(grid_length):
         #déplacement
-        for c in range(grid_length - 1,):
+        for c in range(grid_length - 1):
             for i in range(c,grid_length-1):
                 if grid[l][i] != " ":
                     index = i
@@ -110,7 +110,7 @@ def move_left(grid):
 
             grid[l][index], grid[l][c] = grid[l][c], grid[l][index]
         #addition
-        for c in range(grid_length - 1):
+        
             if grid[l][c] != " ":
 
                 if grid[l][c+1] == grid[l][c]:
@@ -118,7 +118,7 @@ def move_left(grid):
                     grid[l][c] = str(value)
                     grid[l][c+1] = " "
         #déplacement
-        for c in range(grid_length - 1):
+        
             for i in range(c,grid_length-1):
                 if grid[l][i] != " ":
                     index = i
@@ -141,7 +141,7 @@ def move_down(grid):
 
             grid[index][c], grid[l][c] = grid[l][c], grid[index][c]
         #addition
-        for c in range(grid_length):
+        
             if l != grid_length -1:
                 if grid[l][c] != " ":
 
@@ -150,7 +150,7 @@ def move_down(grid):
                         grid[l+1][c] = str(value)
                         grid[l][c] = " "
         #déplacement
-        for c in range(grid_length):
+        
             for i in range(l,0,-1): # itérer toutes les cases au dessus de la case acutelle
                 if grid[i][c] != " ":
                     index = i
@@ -173,7 +173,7 @@ def move_up(grid):
 
             grid[index][c], grid[l][c] = grid[l][c], grid[index][c]
         #addition
-        for c in range(grid_length):
+        
             if l != 0:
                 if grid[l][c] != " ":
 
@@ -182,7 +182,7 @@ def move_up(grid):
                         grid[l-1][c] = str(value)
                         grid[l][c] = " "
         #déplacement
-        for c in range(grid_length):
+        
             for i in range(l,grid_length-1): # itérer toutes les cases au dessus de la case acutelle
                 if grid[i][c] != " ":
                     index = i
