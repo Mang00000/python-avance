@@ -15,22 +15,6 @@ def ask_int(message: str, min: int, max: int):
             print("veuillez rentrer un nombre valide")
     return check
  
-numbers = "1234567890"
- 
-def ask_str(message: str):
-    run = True
-    while run:
-        try_number = True
-        check: str = str(input(message)).strip().upper()
-        for e in check:
-            if e in numbers:
-                try_number = False
-            if try_number:
-                break
-            else:
-                print("veuillez rentrer une chaine de caractères svp")
- 
-    return check
  
 def is_game_won(grid):
     for row in grid:
@@ -51,6 +35,8 @@ def is_game_over(grid):
                 return False
 
     return True
+
+
 
 def is_valid_movement(movement):
     valid_movements = ["D", "DROITE", "RIGHT", "G", "GAUCHE", "LEFT", "Q", "H", "HAUT", "TOP", "Z", "B", "BAS", "BOTTOM", "S"]
@@ -119,9 +105,24 @@ def create_new_block(grid, available):
     print(f"Nouveau chiffre -> {value} <- aux coordonnées {line }, {column}")
  
  
+
+def is_grid_empty(grid):
+    for row in grid:
+        for cell in row:
+            if cell != " ":
+                return False
+    return True
+
+
+
+
 run = True
 def play():
     grid = [[" " for _ in range(grid_length)] for _ in range(grid_length)]
+    if is_grid_empty(grid):
+        available = init_available(grid)
+        create_new_block(grid, available)
+        create_new_block(grid, available)
  
     #grid test Droite
     """
@@ -164,7 +165,7 @@ def play():
     """
 
     available = init_available(grid)
-    create_new_block(grid, available)
+    
 
     while run:
         display_grid(grid)
@@ -196,118 +197,140 @@ def play():
 
         if movement == "D" or movement == "DROITE" or movement == "RIGHT":
             for l in range(grid_length):
-                for c in range(grid_length-1, -1, -1):
+                #déplacement
+                for c in range(grid_length - 1, 0, -1):
+                    for i in range(c,0,-1):
+                        if grid[l][i] != " ":
+                            index = i
+                            break
+                        else:
+                            index = 0
+
+                    grid[l][index], grid[l][c] = grid[l][c], grid[l][index]
+                #addition
+                for c in range(grid_length - 1, 0, -1):
                     if grid[l][c] != " ":
-                        c = 0
-                        for i1 in range(0,4):                             
-                            if c < grid_length-1:
-                                if grid[l][c+1] == " ":
-                                    grid[l][c+1] = grid[l][c]
-                                    grid[l][c] = " "
-                            c += 1
-                for c in range(grid_length-1, -1, -1):
-                    if grid[l][c] != " ":
-                        if c < grid_length-1:
-                            if grid[l][c+1] == grid[l][c] and grid[l][c] != " ":
-                                value = int(grid[l][c+1]) * 2
-                                grid[l][c+1] = str(value)
-                                grid[l][c] = " "  
-                for c in range(grid_length-1, -1, -1):
-                    if grid[l][c] != " ":
-                        c = 0
-                        for i1 in range(0,4):                             
-                            if c < grid_length-1:
-                                if grid[l][c+1] == " ":
-                                    grid[l][c+1] = grid[l][c]
-                                    grid[l][c] = " "
-                            c += 1 
+
+                        if grid[l][c-1] == grid[l][c]:
+                            value = int(grid[l][c]) * 2
+                            grid[l][c] = str(value)
+                            grid[l][c-1] = " "
+
+                #déplacement    
+                
+                for c in range(grid_length - 1, 0, -1):
+                    for i in range(c,0,-1):
+                        if grid[l][i] != " ":
+                            index = i
+                            break
+                        else:
+                            index = 0
+
+                    grid[l][index], grid[l][c] = grid[l][c], grid[l][index]
 
 
+       
         if movement == "G" or movement == "GAUCHE" or movement == "LEFT" or movement == "Q":
             for l in range(grid_length):
-                for c in range(0, grid_length, 1):
+                #déplacement
+                for c in range(grid_length - 1):
+                    for i in range(c,grid_length-1):
+                        if grid[l][i] != " ":
+                            index = i
+                            break
+                        else:
+                            index = -1
+
+                    grid[l][index], grid[l][c] = grid[l][c], grid[l][index]
+                #addition
+                for c in range(grid_length - 1):
                     if grid[l][c] != " ":
-                        c = 3
-                        for i1 in range(0,4):                             
-                            if c > 0:
-                                if grid[l][c-1] == " ":
-                                    grid[l][c-1] = grid[l][c]
-                                    grid[l][c] = " "
-                            c -= 1
-                for c in range(0, grid_length, 1):
-                    if grid[l][c] != " ":
-                        if c < 3:
-                            if grid[l][c+1] == grid[l][c] and grid[l][c] != " ":
-                                value = int(grid[l][c]) * 2
-                                grid[l][c] = str(value)
-                                grid[l][c+1] = " "     
-                for c in range(0, grid_length, 1):           
-                    if grid[l][c] != " ":
-                        c = 0
-                        for i1 in range(0,4):                             
-                            if c > 0:
-                                if grid[l][c-1] == " ":
-                                    grid[l][c-1] = grid[l][c]
-                                    grid[l][c] = " "
-                            c += 1 
+
+                        if grid[l][c+1] == grid[l][c]:
+                            value = int(grid[l][c]) * 2
+                            grid[l][c] = str(value)
+                            grid[l][c+1] = " "
+
+                #déplacement
+                for c in range(grid_length - 1):
+                    for i in range(c,grid_length-1):
+                        if grid[l][i] != " ":
+                            index = i
+                            break
+                        else:
+                            index = -1
+
+                    grid[l][index], grid[l][c] = grid[l][c], grid[l][index]
 
 
         if movement == "H" or movement == "HAUT" or movement == "TOP" or movement == "Z":
-            for c in range(grid_length):
-                for l in range(0, grid_length, 1):               
-                    if grid[l][c] != " ":
-                        l = 3
-                        for i1 in range(0,4):                             
-                            if l > 0:
-                                if grid[l-1][c] == " ":
-                                    grid[l-1][c] = grid[l][c]
-                                    grid[l][c] = " "
-                            l -= 1
-                for l in range(0, grid_length, 1):
-                    if grid[l][c] != " ":
-                        if l < 3:
-                            if grid[l+1][c] == grid[l][c] and grid[l][c] != " ":
+            for l in range(grid_length - 1):
+                #déplacement
+                for c in range(grid_length):
+                    for i in range(l,grid_length-1): # itérer toutes les cases au dessus de la case acutelle
+                        if grid[i][c] != " ":
+                            index = i
+                            break
+                        else:
+                            index = -1
+
+                    grid[index][c], grid[l][c] = grid[l][c], grid[index][c]
+                #addition
+                for c in range(grid_length):
+                    if l != 0:
+                        if grid[l][c] != " ":
+
+                            if grid[l-1][c] == grid[l][c]:
                                 value = int(grid[l][c]) * 2
-                                grid[l][c] = str(value)
-                                grid[l+1][c] = " "  
-                for l in range(0, grid_length, 1):              
-                    if grid[l][c] != " ":
-                        l = 0
-                        for i1 in range(0,4):                             
-                            if l > 0:
-                                if grid[l-1][c] == " ":
-                                    grid[l-1][c] = grid[l][c]
-                                    grid[l][c] = " "
-                            l += 1 
+                                grid[l-1][c] = str(value)
+                                grid[l][c] = " "
+
+                #déplacement    
+                
+                for c in range(grid_length):
+                    for i in range(l,grid_length-1): # itérer toutes les cases au dessus de la case acutelle
+                        if grid[i][c] != " ":
+                            index = i
+                            break
+                        else:
+                            index = -1
+
+                    grid[index][c], grid[l][c] = grid[l][c], grid[index][c]
  
 
         if movement == "B" or movement == "BAS" or movement == "BOTTOM" or movement == "S":
-            for c in range(grid_length):
-                for l in range(grid_length-1, -1, -1):
-                    if grid[l][c] != " ":
-                        l = 0
-                        for i1 in range(0,4):                             
-                            if l < grid_length-1:
-                                if grid[l+1][c] == " ":
-                                    grid[l+1][c] = grid[l][c]
-                                    grid[l][c] = " "
-                            l += 1
-                for l in range(grid_length-1,-1,-1):
-                    if grid[l][c] != " ":
-                        if l < grid_length-1:
-                            if grid[l+1][c] == grid[l][c] and grid[l][c] != " ":
-                                value = int(grid[l+1][c]) * 2
+            for l in range(grid_length - 1, 0, -1):
+                #déplacement
+                for c in range(grid_length):
+                    for i in range(l,0,-1): # itérer toutes les cases au dessus de la case acutelle
+                        if grid[i][c] != " ":
+                            index = i
+                            break
+                        else:
+                            index = 0
+
+                    grid[index][c], grid[l][c] = grid[l][c], grid[index][c]
+                #addition
+                for c in range(grid_length):
+                    if l != grid_length -1:
+                        if grid[l][c] != " ":
+
+                            if grid[l+1][c] == grid[l][c]:
+                                value = int(grid[l][c]) * 2
                                 grid[l+1][c] = str(value)
                                 grid[l][c] = " "
-                for l in range(grid_length-1,-1,-1):             
-                    if grid[l][c] != " ":
-                        l = 0
-                        for i1 in range(0,4):                             
-                            if l < grid_length-1:
-                                if grid[l+1][c] == " ":
-                                    grid[l+1][c] = grid[l][c]
-                                    grid[l][c] = " "
-                            l += 1   
+
+                #déplacement    
+                
+                for c in range(grid_length):
+                    for i in range(l,0,-1): # itérer toutes les cases au dessus de la case acutelle
+                        if grid[i][c] != " ":
+                            index = i
+                            break
+                        else:
+                            index = 0
+
+                    grid[index][c], grid[l][c] = grid[l][c], grid[index][c]
                        
         display_grid(grid)
         os.system("cls" if os.name == "nt" else "clear")
